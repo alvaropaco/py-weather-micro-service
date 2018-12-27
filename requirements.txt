@@ -1,0 +1,6 @@
+datetime>=4.3
+collections2>=0.3.0
+pandas>=0.23.4
+requests>=2.21.0
+matplotlib>=2.2.3
+nameko>=2.11.0
