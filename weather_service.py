@@ -1,8 +1,13 @@
 from nameko.rpc import rpc
 
+
+def getWeather(self, qstring):
+    return "Hello, {}!".format(qstring)
+
+
 class WaetherService:
     name = "weather_service"
 
     @rpc
-    def hello(self, name):
-        return "Hello, {}!".format(name)
+    def getPlaylists(self, city, lat, long):
+        return "Hello, {}!".format()
