@@ -57,9 +57,9 @@ def get_playlists(weather, jwt):
     if 'error' in resp:
         e = resp['error']
         error(e['message'])
-    
+
     items = resp['playlists']['items']
-    
+
     for playlist in items:
         filtered.append(playlist['name'])
 
@@ -71,7 +71,8 @@ def get_weather(args, appid):
         if 'lat' not in args or 'lon' not in args:
             error('Missing parameter')
         else:
-            r_str = '{}?units=metric&lat={}&lon={}&appid={}'.format(openweather_base_url, args['lat'], args['lon'], appid)
+            r_str = '{}?units=metric&lat={}&lon={}&appid={}'.format(
+                openweather_base_url, args['lat'], args['lon'], appid)
     else:
         r_str = '{}?units=metric&q={}&appid={}'.format(
             openweather_base_url, quote(

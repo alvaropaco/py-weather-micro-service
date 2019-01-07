@@ -25,12 +25,12 @@ def playlists():
         description: Location data
     """
     with ClusterRpcProxy(CONFIG) as rpc:
-      openwm_appid  = request.headers.get('X-OPENWM-APPID')
-      spotify_token = request.headers.get('X-SPOTIFY-TOKEN')
-      
-      result = rpc.playlists.get_playlists(
-          openwm_appid, spotify_token, request.args)
-      return jsonify(result), 200
+        openwm_appid = request.headers.get('X-OPENWM-APPID')
+        spotify_token = request.headers.get('X-SPOTIFY-TOKEN')
+
+        result = rpc.playlists.get_playlists(
+            openwm_appid, spotify_token, request.args)
+        return jsonify(result), 200
 
 
 if __name__ == "__main__":
