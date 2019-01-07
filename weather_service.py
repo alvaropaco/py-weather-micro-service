@@ -30,38 +30,53 @@ def get_playlists(weather, jwt):
 
     if weather is None:
         error('Missing parameter')
-    
+
     if weather['weather'] is None:
         error('Invalid location')
-    
+
+    main = weather['main']
+
+    temperature = int(main['temp'])
+
+    genrer = 'classical'
+
+    if temperature > 30:
+        genrer = 'party'
+    elif temperature >= 15 and temperature <= 30:
+        genrer = 'pop'
+    elif temperature >= 10 and temperature <= 14:
+        genrer = 'rock'
+
     current = weather['weather'][0]
-    
-    qstring = '{}search?q={}&type=playlist'.format(
-        spotify_base_url, current['description'])
-    
+
+    qstring = '{}search?seed_genres={}&q=name:{}&type=playlist'.format(
+        spotify_base_url, genrer, current['description'])
+
     resp = request(qstring, jwt).json()
 
+    if 'error' in resp:
+        e = resp['error']
+        error(e['message'])
+    
     items = resp['playlists']['items']
-
+    
     for playlist in items:
         filtered.append(playlist['name'])
-    
+
     return filtered
 
 
 def get_weather(args, appid):
-    if args['city'] is None:
-        if args['lat'] is None or args['lon'] is None:
+    if 'city' not in args:
+        if 'lat' not in args or 'lon' not in args:
             error('Missing parameter')
         else:
-            resp = request(
-                '{}?lat={}&lon={}'.format(
-                    openweather_base_url, args['lat'], args['lon']), None)
+            r_str = '{}?units=metric&lat={}&lon={}&appid={}'.format(openweather_base_url, args['lat'], args['lon'], appid)
     else:
-        r_str = '{}?q={}&appid={}'.format(
+        r_str = '{}?units=metric&q={}&appid={}'.format(
             openweather_base_url, quote(
                 args['city']), appid)
-    
+    print(r_str)
     resp = request(r_str, None)
 
     return resp.json()
@@ -79,12 +94,12 @@ class PlaylistsService:
                 error("Missing parameter")
 
             weather = get_weather(args, appid)
-            
+
             if int(weather['cod']) != 200:
                 return weather
 
             playlists = get_playlists(weather, jwt)
-            
+
             return playlists
         except Exception as e:
             print str(e)
