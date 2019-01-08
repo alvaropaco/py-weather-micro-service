@@ -1,0 +1,21 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            docker build -t ifood .
+      - run:
+          name: run tests
+          command: |
+            docker run -it -e X-SPOTIFY-TOKEN=$(echo $X-SPOTIFY-TOKEN) -e X-OPENWM-APPID=504002e265ed827f841600d3259c32ee ifood /app/entrypoint.tests.sh
+          environment:
+            X-SPOTIFY-TOKEN: BQBFN7zjOkZZ71QI3W6__3vJR-3cowaf5VAar3mZ2bkWBnnqwzdoT9E9s9NNlb6qvp-6T2ZEdtUOnh9NoyFtkvtKO7VtXnTllkrXongke_fgLQddcXl-IkRsSJYZEhLk2fChVFHGVXa-Vwqx2zo5wGy6hh4a9dEcNCxw3ssNQwu-pmS3l06ogSJoSLM6foVBnq8E41jxRDCHGsHu_2NclCI2tRQpfh_p2lBvWSGc9-DDWEXNX3MWktqzAz-FqBzaPKrsRFoLiRA1ragGQ-5n
+          

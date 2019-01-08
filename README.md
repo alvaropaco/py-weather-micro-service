@@ -8,16 +8,24 @@ Tha main goal of this project is retreive a list of Spotify playlist based on cu
 
 ### Building
 
+Firstly we need to build the docker image:
+
 `docker build -t ifood .` 
 
 ### Running
+
+Run command will push up the micro-service:
 
 `docker run -it -v $(pwd):/app -p 5000:5000  ifood ./entrypoint.sh` 
 
 ### Usage
 
+Simple http call to the service URL:
+
 `curl -X GET 127.0.0.1:5000/playlists?city=new+york -H "X-SPOTIFY-TOKEN: <spotify-jwt>" -H"X-OPENWM-APPID: 504002e265ed827f841600d3259c32ee"` 
 
 ### Testing 
+
+Can run the API tests:
 
 `docker run -it -v $(pwd):/app -p 5000:5000  ifood ./entrypoint.tests.sh`
