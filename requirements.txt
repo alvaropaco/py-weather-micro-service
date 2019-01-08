@@ -1,6 +1,5 @@
 flask>=1.0.2
 flask-script>=2.0.6
-flasgger>=0.9.2
 requests>=2.21.0
 nameko>=2.11.0
 nose2==0.6.0

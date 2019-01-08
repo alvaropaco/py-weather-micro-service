@@ -1,4 +1,4 @@
 #!/bin/bash
 service rabbitmq-server start
-nameko run zipcode &
+nameko run weather_service &
 python api.py
